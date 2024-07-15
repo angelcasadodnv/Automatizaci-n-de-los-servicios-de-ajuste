@@ -10,7 +10,8 @@ ini_date_pt = "2024-07-06"
 end_date_pt = "2024-07-12"
 indicator = '672'
 name = 'hola'
-def download_data(ini_date_pt, end_date_pt, name, indicator):
+def download_data(ini_date_pt, end_date_pt, name, indicator, dir):
+    os.chdir(dir)
     command = f'''curl "https://api.esios.ree.es/indicators/{indicator}?\
 datetime=&\
 start_date={ini_date_pt}T00:00:00{timeZone}:00&\
@@ -50,4 +51,5 @@ locale=en" \
                 df = df.append({'data': row}, ignore_index=True)
         
         # Export the main dataframe to CSV
-    df.to_csv(f'prueba_final.csv', header=False, index=False)
+    os.remove(f'{name}.json')        
+    df.to_csv(f'{name}.csv', header=False, index=False)
