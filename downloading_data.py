@@ -6,10 +6,13 @@ import numpy
 
 APIkey = '2b08d9cf036ea69012bfa2a06d6c13136b0ff91e9a9f148f09ac09216d237ec3'
 timeZone = '+01'
-ini_date_pt = "2024-07-06"
-end_date_pt = "2024-07-12"
-indicator = '672'
-name = 'hola'
+import sys
+sys.path.append(os.getcwd() + '/lib/')
+from logger import *
+logger = MyLogger("Weekly ES | Main")
+## Set logger level to 'logger_level' variable
+logger_level = 20
+addLogConsole(logger, logger_level)
 def download_data(ini_date_pt, end_date_pt, name, indicator, dir):
     os.chdir(dir)
     command = f'''curl "https://api.esios.ree.es/indicators/{indicator}?\
@@ -42,13 +45,24 @@ locale=en" \
     df = pd.DataFrame({'data':[]})
     data = pd.read_csv(f'{name}.json')
     for index, row in data.iterrows():
-                datetime = row.datetime
-                isodate = datetime[0:10].replace('-','')
-                hour = int(datetime[11:13]) 
-                min = int(datetime[14:16]) 
-                quantity = row.value
-                row = f'{isodate};{hour};{min};{quantity}'
-                df = df.append({'data': row}, ignore_index=True)
+                if indicator ==  1782 and row.geo_name == 'Spain':
+                    datetime = row.datetime
+                    isodate = datetime[0:10].replace('-','')
+                    hour = int(datetime[11:13]) 
+                    datetime = row.tz_time
+                    min = int(datetime[14:16]) 
+                    quantity = row.value
+                    row = f'{isodate};{hour};{min};{quantity};{row.geo_name}'
+                    df = df.append({'data': row}, ignore_index=True)
+                elif indicator != 1782:
+                    datetime = row.datetime
+                    isodate = datetime[0:10].replace('-','')
+                    hour = int(datetime[11:13]) 
+                    datetime = row.tz_time
+                    min = int(datetime[14:16]) 
+                    quantity = row.value
+                    row = f'{isodate};{hour};{min};{quantity}'
+                    df = df.append({'data': row}, ignore_index=True)
         
         # Export the main dataframe to CSV
     os.remove(f'{name}.json')        
