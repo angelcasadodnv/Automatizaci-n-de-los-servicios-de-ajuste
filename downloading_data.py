@@ -43,27 +43,30 @@ locale=en" \
             df = pd.DataFrame(data["indicator"]["values"])
             df.to_csv(f'{name}.json', index=False)
     df = pd.DataFrame({'data':[]})
-    data = pd.read_csv(f'{name}.json')
-    for index, row in data.iterrows():
-                if indicator ==  1782 and row.geo_name == 'Spain':
-                    datetime = row.datetime
-                    isodate = datetime[0:10].replace('-','')
-                    hour = int(datetime[11:13]) 
-                    datetime = row.tz_time
-                    min = int(datetime[14:16]) 
-                    quantity = row.value
-                    row = f'{isodate};{hour};{min};{quantity};{row.geo_name}'
-                    df = df.append({'data': row}, ignore_index=True)
-                elif indicator != 1782:
-                    datetime = row.datetime
-                    isodate = datetime[0:10].replace('-','')
-                    hour = int(datetime[11:13]) 
-                    datetime = row.tz_time
-                    min = int(datetime[14:16]) 
-                    quantity = row.value
-                    row = f'{isodate};{hour};{min};{quantity}'
-                    df = df.append({'data': row}, ignore_index=True)
+    try:
+        data = pd.read_csv(f'{name}.json')
+        for index, row in data.iterrows():
+                    if indicator ==  1782 and row.geo_name == 'Spain':
+                        datetime = row.datetime
+                        isodate = datetime[0:10].replace('-','')
+                        hour = int(datetime[11:13]) 
+                        datetime = row.tz_time
+                        min = int(datetime[14:16]) 
+                        quantity = row.value
+                        row = f'{isodate};{hour};{min};{quantity};{row.geo_name}'
+                        df = df.append({'data': row}, ignore_index=True)
+                    elif indicator != 1782:
+                        datetime = row.datetime
+                        isodate = datetime[0:10].replace('-','')
+                        hour = int(datetime[11:13]) 
+                        datetime = row.tz_time
+                        min = int(datetime[14:16]) 
+                        quantity = row.value
+                        row = f'{isodate};{hour};{min};{quantity}'
+                        df = df.append({'data': row}, ignore_index=True)
         
-        # Export the main dataframe to CSV
-    os.remove(f'{name}.json')        
-    df.to_csv(f'{name}.csv', header=False, index=False)
+            # Export the main dataframe to CSV
+        os.remove(f'{name}.json')        
+        df.to_csv(f'{name}.csv', header=False, index=False)
+    except:
+        logger.info(f"Missing information in: {name}")  

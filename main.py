@@ -81,7 +81,7 @@ names = [
 
 
 name_dir = 'data'
-makeDir.makeDir(name_dir)
+
 directory = os.getcwd() + f"\\{name_dir}"
 print(directory)
 

@@ -59,7 +59,7 @@ def setRR(cnxn, ini_date, final_date, RR_interval):
     
     while current_datetime <= final_datetime:
         #result.append(f"{current_datetime.strftime('%Y-%m-%d')}, {current_datetime.hour}, {current_datetime.minute}")
-        date_str = current_datetime.strftime('%Y-%m-%d')
+        date_str = current_datetime.strftime('%Y%m%d')
         hour = current_datetime.hour
         minute = current_datetime.minute
         action = "SELECT id FROM RR where Date = ? and HH = ? and NN = ?;"
@@ -87,7 +87,7 @@ def set_aFRR_Energy(cnxn, ini_date, final_date, aFRR_Energy_interval):
     
     while current_datetime <= final_datetime:
         #result.append(f"{current_datetime.strftime('%Y-%m-%d')}, {current_datetime.hour}, {current_datetime.minute}")
-        date_str = current_datetime.strftime('%Y-%m-%d')
+        date_str = current_datetime.strftime('%Y%m%d')
         hour = current_datetime.hour
         minute = current_datetime.minute
         action = "SELECT id FROM aFRR_Energy where Date = ? and HH = ? and NN = ?;"
@@ -115,7 +115,7 @@ def set_mFRR_Energy(cnxn, ini_date, final_date, aFRR_Energy_interval):
     
     while current_datetime <= final_datetime:
         #result.append(f"{current_datetime.strftime('%Y-%m-%d')}, {current_datetime.hour}, {current_datetime.minute}")
-        date_str = current_datetime.strftime('%Y-%m-%d')
+        date_str = current_datetime.strftime('%Y%m%d')
         hour = current_datetime.hour
         minute = current_datetime.minute
         action = "SELECT id FROM mFRR_Energy where Date = ? and HH = ? and NN = ?;"
@@ -143,7 +143,7 @@ def set_aFRR_power(cnxn, ini_date, final_date, aFRR_Energy_interval):
     
     while current_datetime <= final_datetime:
         #result.append(f"{current_datetime.strftime('%Y-%m-%d')}, {current_datetime.hour}, {current_datetime.minute}")
-        date_str = current_datetime.strftime('%Y-%m-%d')
+        date_str = current_datetime.strftime('%Y%m%d')
         hour = current_datetime.hour
         minute = current_datetime.minute
         action = "SELECT id FROM aFRR_power where Date = ? and HH = ? and NN = ?;"
@@ -172,7 +172,7 @@ def update_mFRR_Energy(xl, cnxn, dir_data):
                 fecha_obj = datetime.datetime.strptime(row[0], "%Y%m%d")
 
                 # Convierte el objeto datetime al nuevo formato
-                fecha_formateada = fecha_obj.strftime("%Y-%m-%d")
+                fecha_formateada = fecha_obj.strftime("%Y%m%d")
                 action = "SELECT id FROM aFRR_Energy where Date = ? and HH = ? and NN = ?;"
                 cnxn.execute(action, (fecha_formateada, row[1], row[2]))
                 result = cnxn.fetchall()
@@ -212,7 +212,7 @@ def update_aFRR_Energy(xl, cnxn, dir_data):
                 fecha_obj = datetime.datetime.strptime(row[0], "%Y%m%d")
 
                 # Convierte el objeto datetime al nuevo formato
-                fecha_formateada = fecha_obj.strftime("%Y-%m-%d")
+                fecha_formateada = fecha_obj.strftime("%Y%m%d")
                 action = "SELECT id FROM aFRR_Energy where Date = ? and HH = ? and NN = ?;"
                 cnxn.execute(action, (fecha_formateada, row[1], row[2]))
                 result = cnxn.fetchall()
@@ -242,6 +242,8 @@ def update_aFRR_Energy(xl, cnxn, dir_data):
 def updateRR(xl, cnxn, dir_data):
     csvRR = ['Energy RR Up.csv', 'Energy RR Down.csv', 'Energy Price RR.csv']
     os.chdir(dir_data)
+    if not os.path.exists('Energy Price RR.csv'):
+        csvRR.remove('Energy Price RR.csv')
     for k in range(0, len(csvRR)):
         with open(csvRR[k]) as csvfile:
             logger.info(f"CSV : {csvRR[k]}...")
@@ -250,7 +252,7 @@ def updateRR(xl, cnxn, dir_data):
                 fecha_obj = datetime.datetime.strptime(row[0], "%Y%m%d")
 
                 # Convierte el objeto datetime al nuevo formato
-                fecha_formateada = fecha_obj.strftime("%Y-%m-%d")
+                fecha_formateada = fecha_obj.strftime("%Y%m%d")
                 action = "SELECT id FROM RR where Date = ? and HH = ? and NN = ?;"
                 cnxn.execute(action, (fecha_formateada, row[1], row[2]))
                 result = cnxn.fetchall()
@@ -283,7 +285,7 @@ def update_aFRR_power(xl, cnxn, dir_data):
                 fecha_obj = datetime.datetime.strptime(row[0], "%Y%m%d")
 
                 # Convierte el objeto datetime al nuevo formato
-                fecha_formateada = fecha_obj.strftime("%Y-%m-%d")
+                fecha_formateada = fecha_obj.strftime("%Y%m%d")
                 action = "SELECT id FROM aFRR_power where Date = ? and HH = ? and NN = ?;"
                 cnxn.execute(action, (fecha_formateada, row[1], row[2]))
                 result = cnxn.fetchall()
