@@ -37,6 +37,9 @@ xl = Dispatch('Excel.Application')
 xl.Visible = False
 ruta_actual = os.getcwd()
 ruta_excel = ruta_actual + "\\data_for_the_script.xlsx"
+
+#Variables from excel
+
 workbook = xl.Workbooks.Open(Filename = ruta_excel)
 sheet = workbook.Sheets("main")
 ini_date_pt = sheet.Cells(5, 3).Value
@@ -85,11 +88,15 @@ name_dir = 'data'
 directory = os.getcwd() + f"\\{name_dir}"
 print(directory)
 
+#Downloading data we need
+
 logger.info(f'Descargando informacion en el directorio : {name_dir}')
 for name in names: 
     downloading_data.download_data(ini_date_pt, end_date_pt, name[0], name[1], directory)
 cnxn = DB.setup()
 
+
+#We call the methos the user said
 
 if new_RR:
     logger.info("Creating new rows for table RR")

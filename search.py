@@ -1,7 +1,6 @@
 
 
 
-
 from ctypes.wintypes import BOOL
 import os, sys
 import downloading_data
@@ -80,6 +79,8 @@ directory = os.getcwd() + f"\\{name_dir}"
 
 cnxn = DB.setup()
 
+ini_date_pt = datetime.datetime.strptime(ini_date_pt, '%Y-%m-%d')
+ini_date_pt = ini_date_pt.strftime('%Y%m%d')
 action = f"SELECT id, Date, HH, NN FROM {tabla} where Date >= ? and Date <= ?;"
 cnxn.execute(action, (ini_date_pt, end_date_pt))
 result = cnxn.fetchall()
