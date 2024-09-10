@@ -106,8 +106,10 @@ for i in range(0, number_weeks):
 
 
     name_dir = 'data'
-
-    directory = os.getcwd() + f"\\{name_dir}"
+    print(os.getcwd())
+    if os.getcwd().split(os.sep)[-1] != name_dir:
+        
+        directory = os.getcwd() + f"\\{name_dir}"
     print(directory)
 
     logger.info(f'Descargando informacion en el directorio : {name_dir}')
@@ -125,8 +127,8 @@ for i in range(0, number_weeks):
         
 
     if new_aFRR_Energy:
-        DB.set_aFRR_Energy(cnxn, ini_date_pt, end_date_pt, aFRR_Energy_interval)
         logger.info("Creating new rows for table aFRR_Energy")
+        DB.set_aFRR_Energy(cnxn, ini_date_pt, end_date_pt, aFRR_Energy_interval)
     if update_aFRR_Energy:
         logger.info("Updating rows for table aFRR_Energy")
         DB.update_aFRR_Energy(xl, cnxn, directory)

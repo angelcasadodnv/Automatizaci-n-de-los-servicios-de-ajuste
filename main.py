@@ -85,7 +85,9 @@ names = [
 
 name_dir = 'data'
 
-directory = os.getcwd() + f"\\{name_dir}"
+if os.getcwd().split(os.sep)[-1] != name_dir:
+        
+        directory = os.getcwd() + f"\\{name_dir}"
 print(directory)
 
 #Downloading data we need
@@ -96,24 +98,29 @@ for name in names:
 cnxn = DB.setup()
 
 
-#We call the methos the user said
+#We call the methods the user said
 
 if new_RR:
     logger.info("Creating new rows for table RR")
     DB.setRR(cnxn, ini_date_pt, end_date_pt, RR_interval)
 if update_RR:
-    DB.updateRR(xl, cnxn, directory)
     logger.info("Updating rows for table RR")
-
+    DB.updateRR(xl, cnxn, directory)
 if new_aFRR_Energy:
+    logger.info("Creating new rows for table aFRR_Energy")
     DB.set_aFRR_Energy(cnxn, ini_date_pt, end_date_pt, aFRR_Energy_interval)
 if update_aFRR_Energy:
+    logger.info("Updating rows for table aFRR_Energy")
     DB.update_aFRR_Energy(xl, cnxn, directory)
 if new_mFRR_Energy: 
+    logger.info("Creating new rows for table mFRR_Energy")
     DB.set_mFRR_Energy(cnxn, ini_date_pt, end_date_pt, aFRR_Energy_interval)
 if update_mFRR_Energy:
+    logger.info("Updating rows for table mFRR_Energy")
     DB.update_mFRR_Energy(xl, cnxn, directory)
 if new_aFRR_power:
+    logger.info("Creating new rows for table aFRR_Power")
     DB.set_aFRR_power(cnxn, ini_date_pt, end_date_pt, aFRR_power_interval)
 if update_aFRR_power: 
+    logger.info("Updating rows for table aFRR_Power")
     DB.update_aFRR_power(xl, cnxn, directory)

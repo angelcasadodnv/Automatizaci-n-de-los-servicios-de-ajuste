@@ -48,13 +48,13 @@ interval = sheet.Cells(5, 6).Value
 
 ini_datetime = datetime.datetime.strptime(ini_date_pt, '%Y-%m-%d')
 final_datetime = datetime.datetime.strptime(end_date_pt, '%Y-%m-%d')
-    
+final_datetime = final_datetime + timedelta(days=1)
 current_datetime = ini_datetime
 delta = timedelta(minutes=interval)
     
 days_interval = []
 workbook.Close()  
-while current_datetime <= final_datetime:
+while current_datetime < final_datetime:
     date_str = current_datetime.strftime('%Y%m%d')
     add = ""
     add_2 = ""
@@ -81,6 +81,8 @@ cnxn = DB.setup()
 
 ini_date_pt = datetime.datetime.strptime(ini_date_pt, '%Y-%m-%d')
 ini_date_pt = ini_date_pt.strftime('%Y%m%d')
+end_date_pt = datetime.datetime.strptime(end_date_pt, '%Y-%m-%d')
+end_date_pt = end_date_pt.strftime('%Y%m%d')
 action = f"SELECT id, Date, HH, NN FROM {tabla} where Date >= ? and Date <= ?;"
 cnxn.execute(action, (ini_date_pt, end_date_pt))
 result = cnxn.fetchall()
