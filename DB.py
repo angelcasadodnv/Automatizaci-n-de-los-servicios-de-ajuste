@@ -173,12 +173,12 @@ def update_mFRR_Energy(xl, cnxn, dir_data):
 
                 # Convierte el objeto datetime al nuevo formato
                 fecha_formateada = fecha_obj.strftime("%Y%m%d")
-                action = "SELECT id FROM aFRR_Energy where Date = ? and HH = ? and NN = ?;"
+                action = "SELECT id FROM mFRR_Energy where Date = ? and HH = ? and NN = ?;"
                 cnxn.execute(action, (fecha_formateada, row[1], row[2]))
                 result = cnxn.fetchall()
                 for r in result:
                     id_row = (r)
-                
+                    
                 if k == 0: 
                     action = "UPDATE mFRR_Energy SET Energy_mFRR_Up = ? WHERE id = ?"
                     cnxn.execute(action, (row[3], id_row[0]))

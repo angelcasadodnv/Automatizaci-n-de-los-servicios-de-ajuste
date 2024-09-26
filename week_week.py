@@ -33,7 +33,7 @@ def killTask (task: str):
 
 
 
-
+#Creating excel object
 killTask("EXCEL.EXE")
 xl = Dispatch('Excel.Application')
 xl.Visible = False
@@ -41,9 +41,12 @@ ruta_actual = os.getcwd()
 ruta_excel = ruta_actual + "\\data_for_the_script.xlsx"
 workbook = xl.Workbooks.Open(Filename = ruta_excel)
 sheet = workbook.Sheets("week_week")
+
+#Checking values from excel
+
 ini_date_pt = sheet.Cells(5, 3).Value
 fecha_dt = datetime.datetime.strptime(ini_date_pt, '%Y-%m-%d')
-nueva_fecha_dt = fecha_dt + timedelta(weeks=1)
+nueva_fecha_dt = fecha_dt + timedelta(weeks=4)
 end_date_pt = nueva_fecha_dt.strftime('%Y-%m-%d')
 number_weeks = int(sheet.Cells(5, 4).Value)
 new_RR = bool(sheet.Cells(10, 4).Value)
@@ -69,14 +72,14 @@ for i in range(0, number_weeks):
         fecha_dt = datetime.datetime.strptime(ini_date_pt, '%Y-%m-%d')
 
         # Sumar una semana
-        nueva_fecha_dt = fecha_dt + timedelta(weeks=1)
+        nueva_fecha_dt = fecha_dt + timedelta(weeks=4)
 
         # Convertir el objeto datetime de vuelta a una cadena
         ini_date_pt = nueva_fecha_dt.strftime('%Y-%m-%d')
         fecha_dt = datetime.datetime.strptime(end_date_pt, '%Y-%m-%d')
 
         # Sumar una semana
-        nueva_fecha_dt = fecha_dt + timedelta(weeks=1)
+        nueva_fecha_dt = fecha_dt + timedelta(weeks=4)
 
         # Convertir el objeto datetime de vuelta a una cadena
         end_date_pt = nueva_fecha_dt.strftime('%Y-%m-%d')
@@ -124,8 +127,6 @@ for i in range(0, number_weeks):
     if update_RR:
         logger.info("Updating rows for table RR")
         DB.updateRR(xl, cnxn, directory)
-        
-
     if new_aFRR_Energy:
         logger.info("Creating new rows for table aFRR_Energy")
         DB.set_aFRR_Energy(cnxn, ini_date_pt, end_date_pt, aFRR_Energy_interval)
