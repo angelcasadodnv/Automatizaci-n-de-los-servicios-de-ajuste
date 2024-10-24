@@ -36,11 +36,11 @@ killTask("EXCEL.EXE")
 xl = Dispatch('Excel.Application')
 xl.Visible = False
 ruta_actual = os.getcwd()
-ruta_excel = ruta_actual + "\\data_for_the_script.xlsx"
+ruta_excel = ruta_actual[0:-4] + "\\data_for_the_script.xlsx"
 
 #Variables from excel
 
-workbook = xl.Workbooks.Open(Filename = ruta_excel)
+workbook = xl.Workbooks.Open(Filename = ruta_excel )
 sheet = workbook.Sheets("main")
 ini_date_pt = sheet.Cells(5, 3).Value
 end_date_pt = sheet.Cells(5, 4).Value
@@ -87,7 +87,7 @@ name_dir = 'data'
 
 if os.getcwd().split(os.sep)[-1] != name_dir:
         
-        directory = os.getcwd() + f"\\{name_dir}"
+        directory = os.getcwd()[0:-4] + f"\\{name_dir}"
 print(directory)
 
 #Downloading data we need

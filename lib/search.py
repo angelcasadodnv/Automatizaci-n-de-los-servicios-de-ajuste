@@ -37,7 +37,7 @@ killTask("EXCEL.EXE")
 xl = Dispatch('Excel.Application')
 xl.Visible = False
 ruta_actual = os.getcwd()
-ruta_excel = ruta_actual + "\\data_for_the_script.xlsx"
+ruta_excel = ruta_actual[0:-4] + "\\data_for_the_script.xlsx"
 workbook = xl.Workbooks.Open(Filename = ruta_excel)
 sheet = workbook.Sheets("search")
 ini_date_pt = sheet.Cells(5, 3).Value
@@ -75,7 +75,7 @@ logger.info(tabla)
 
 name_dir = 'data'
 
-directory = os.getcwd() + f"\\{name_dir}"
+directory = os.getcwd()[0:-4] + f"\\{name_dir}"
 
 cnxn = DB.setup()
 
@@ -112,8 +112,8 @@ for row in result:
     i += 1
 
 # Guardar el libro de Excel
-file_path = os.getcwd() + '\\days_in_database.xlsx'
-file_path_2 = os.getcwd() + '\\days_missing.xlsx'
+file_path = os.getcwd()[0:-4] + '\\days_in_database.xlsx'
+file_path_2 = os.getcwd()[0:-4] + '\\days_missing.xlsx'
 
 i = 1
 for data in days_interval:

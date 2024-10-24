@@ -38,7 +38,7 @@ killTask("EXCEL.EXE")
 xl = Dispatch('Excel.Application')
 xl.Visible = False
 ruta_actual = os.getcwd()
-ruta_excel = ruta_actual + "\\data_for_the_script.xlsx"
+ruta_excel = ruta_actual[0:-4] + "\\data_for_the_script.xlsx"
 workbook = xl.Workbooks.Open(Filename = ruta_excel)
 sheet = workbook.Sheets("week_week")
 
@@ -112,7 +112,7 @@ for i in range(0, number_weeks):
     print(os.getcwd())
     if os.getcwd().split(os.sep)[-1] != name_dir:
         
-        directory = os.getcwd() + f"\\{name_dir}"
+        directory = os.getcwd()[0:-4] + f"\\{name_dir}"
     print(directory)
 
     logger.info(f'Descargando informacion en el directorio : {name_dir}')
